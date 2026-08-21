@@ -1,0 +1,477 @@
+generator client {
+  provider = "prisma-client-js"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+enum UserRole {
+  FOUNDER
+  COMPANY
+  EXPERT
+  FOUNDIC_TEAM
+  ADMIN
+}
+
+enum ExpertStatus {
+  PENDING
+  AI_REVIEWED
+  MANUAL_REVIEW
+  INTERVIEW
+  TRIAL
+  APPROVED
+  REJECTED
+}
+
+enum ProblemStatus {
+  DRAFT
+  AI_REVIEW
+  FOUNDIC_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum ProposalStatus {
+  DRAFT
+  SENT
+  APPROVED
+  REJECTED
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  BLOCKED
+  DONE
+}
+
+enum MeetingType {
+  DISCOVERY
+  KICKOFF
+  WEEKLY_REVIEW
+  MONTHLY_REVIEW
+  FINAL_REVIEW
+}
+
+enum DocumentType {
+  CONTRACT
+  REPORT
+  TRAINING_MATERIAL
+  PRESENTATION
+  VIDEO
+  TEMPLATE
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+
+model User {
+  id                String   @id @default(uuid())
+  email             String   @unique
+  phone             String?  @unique
+  passwordHash      String   @map("password_hash")
+  role              UserRole
+  isVerified        Boolean  @default(false) @map("is_verified")
+  twoFactorEnabled  Boolean  @default(false) @map("two_factor_enabled")
+  twoFactorSecret   String?  @map("two_factor_secret")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  founderProfile    FounderProfile?
+  companyProfile    CompanyProfile?
+  expertProfile     ExpertProfile?
+  ownedTasks        Task[]           @relation("TaskOwner")
+  sentMessages      Message[]
+  notifications     Notification[]
+  ratingsGiven      Rating[]         @relation("RatedBy")
+  ratingsReceived   Rating[]         @relation("RatedUser")
+  adminLogs         AdminLog[]
+
+  @@map("users")
+}
+
+model FounderProfile {
+  id                  String  @id @default(uuid())
+  userId              String  @unique @map("user_id")
+  fullName            String  @map("full_name")
+  businessHealthScore Int?    @map("business_health_score")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problems Problem[]
+
+  @@map("founder_profiles")
+}
+
+model CompanyProfile {
+  id                String   @id @default(uuid())
+  userId            String   @unique @map("user_id")
+  industry          String?
+  companySize       String?  @map("company_size")
+  employees         Int?
+  revenue           String?
+  currentChallenges String?  @map("current_challenges")
+  currentGoals      String?  @map("current_goals")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projects Project[]
+
+  @@map("company_profiles")
+}
+
+model ExpertProfile {
+  id              String       @id @default(uuid())
+  userId          String       @unique @map("user_id")
+  experienceYears Int?         @map("experience_years")
+  industries      String[]
+  skills          String[]
+  portfolioUrl    String?      @map("portfolio_url")
+  certifications  String[]
+  videoIntroUrl   String?      @map("video_intro_url")
+  resumeUrl       String?      @map("resume_url")
+  status          ExpertStatus @default(PENDING)
+  ratingAvg       Float?       @map("rating_avg")
+
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  matches  ExpertMatch[]
+  earnings ExpertEarning[]
+
+  @@map("expert_profiles")
+}
+
+
+model Problem {
+  id          String        @id @default(uuid())
+  founderId   String        @map("founder_id")
+  title       String
+  description String
+  category    String?
+  status      ProblemStatus @default(DRAFT)
+  createdAt   DateTime      @default(now()) @map("created_at")
+
+  founder   FounderProfile     @relation(fields: [founderId], references: [id])
+  diagnosis ProblemDiagnosis?
+  matches   ExpertMatch[]
+  proposals Proposal[]
+
+  @@map("problems")
+}
+
+model ProblemDiagnosis {
+  id                    String   @id @default(uuid())
+  problemId             String   @unique @map("problem_id")
+  rootCause             String   @map("root_cause")
+  priority              String
+  difficultyLevel       String   @map("difficulty_level")
+  suggestedCategories   String[] @map("suggested_categories")
+  estimatedTimeline     String   @map("estimated_timeline")
+  confidenceScore       Float?   @map("confidence_score")
+  createdAt             DateTime @default(now()) @map("created_at")
+
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@map("problem_diagnoses")
+}
+
+model ExpertMatch {
+  id         String   @id @default(uuid())
+  problemId  String   @map("problem_id")
+  expertId   String   @map("expert_id")
+  matchScore Float    @map("match_score")
+  factors    Json?
+  status     String   @default("suggested")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  problem Problem       @relation(fields: [problemId], references: [id])
+  expert  ExpertProfile @relation(fields: [expertId], references: [id])
+
+  @@map("expert_matches")
+}
+
+
+model Proposal {
+  id           String         @id @default(uuid())
+  problemId    String         @map("problem_id")
+  expertId     String         @map("expert_id")
+  scope        String
+  timeline     String
+  deliverables String[]
+  commercials  Json
+  status       ProposalStatus @default(DRAFT)
+  createdAt    DateTime       @default(now()) @map("created_at")
+
+  problem Problem  @relation(fields: [problemId], references: [id])
+  project Project?
+
+  @@map("proposals")
+}
+
+model Project {
+  id         String        @id @default(uuid())
+  proposalId String        @unique @map("proposal_id")
+  companyId  String?       @map("company_id")
+  status     ProjectStatus @default(ACTIVE)
+  startDate  DateTime?     @map("start_date")
+  endDate    DateTime?     @map("end_date")
+  createdAt  DateTime      @default(now()) @map("created_at")
+
+  proposal      Proposal        @relation(fields: [proposalId], references: [id])
+  company       CompanyProfile? @relation(fields: [companyId], references: [id])
+  executionPlan ExecutionPlan?
+  milestones    Milestone[]
+  tasks         Task[]
+  sprints       Sprint[]
+  dailyUpdates  DailyUpdate[]
+  meetings      Meeting[]
+  documents     Document[]
+  invoices      Invoice[]
+  ratings       Rating[]
+  playbooks     Playbook[]
+
+  @@map("projects")
+}
+
+model ExecutionPlan {
+  id            String @id @default(uuid())
+  projectId     String @unique @map("project_id")
+  businessGoal  String @map("business_goal")
+  executionGoal String @map("execution_goal")
+  roadmap       Json
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("execution_plans")
+}
+
+model Milestone {
+  id        String   @id @default(uuid())
+  projectId String   @map("project_id")
+  title     String
+  dueDate   DateTime @map("due_date")
+  status    String   @default("pending")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tasks   Task[]
+
+  @@map("milestones")
+}
+
+model Task {
+  id             String     @id @default(uuid())
+  projectId      String     @map("project_id")
+  milestoneId    String?    @map("milestone_id")
+  name           String
+  ownerId        String     @map("owner_id")
+  priority       String     @default("medium")
+  deadline       DateTime?
+  status         TaskStatus @default(TODO)
+  completionPct  Int        @default(0) @map("completion_pct")
+  createdAt      DateTime   @default(now()) @map("created_at")
+
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  milestone Milestone? @relation(fields: [milestoneId], references: [id])
+  owner     User       @relation("TaskOwner", fields: [ownerId], references: [id])
+
+  @@index([projectId, status])
+  @@index([ownerId, deadline])
+  @@map("tasks")
+}
+
+model Sprint {
+  id         String   @id @default(uuid())
+  projectId  String   @map("project_id")
+  weekNumber Int      @map("week_number")
+  objectives Json
+  startDate  DateTime @map("start_date")
+  endDate    DateTime @map("end_date")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("sprints")
+}
+
+model DailyUpdate {
+  id           String   @id @default(uuid())
+  projectId    String   @map("project_id")
+  userId       String   @map("user_id")
+  date         DateTime
+  planned      String?
+  completed    String?
+  blocked      String?
+  tomorrowPlan String?  @map("tomorrow_plan")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("daily_updates")
+}
+
+model Meeting {
+  id           String      @id @default(uuid())
+  projectId    String      @map("project_id")
+  type         MeetingType
+  scheduledAt  DateTime    @map("scheduled_at")
+  notes        String?
+  recordingUrl String?     @map("recording_url")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("meetings")
+}
+
+model Document {
+  id         String       @id @default(uuid())
+  projectId  String       @map("project_id")
+  type       DocumentType
+  fileUrl    String       @map("file_url")
+  uploadedBy String       @map("uploaded_by")
+  createdAt  DateTime     @default(now()) @map("created_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("documents")
+}
+
+model Message {
+  id          String   @id @default(uuid())
+  channelId   String   @map("channel_id")
+  senderId    String   @map("sender_id")
+  content     String
+  attachments Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  sender User @relation(fields: [senderId], references: [id])
+
+  @@index([channelId])
+  @@map("messages")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  type      String
+  payload   Json
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@map("notifications")
+}
+
+model Playbook {
+  id        String   @id @default(uuid())
+  projectId String   @map("project_id")
+  title     String
+  content   String
+  category  String?
+
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@map("playbooks")
+}
+
+model Course {
+  id       String   @id @default(uuid())
+  title    String
+  category String?
+  videoUrl String   @map("video_url")
+  duration Int?
+
+  certificates Certificate[]
+
+  @@map("courses")
+}
+
+model Certificate {
+  id       String   @id @default(uuid())
+  userId   String   @map("user_id")
+  courseId String   @map("course_id")
+  issuedAt DateTime @default(now()) @map("issued_at")
+
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@map("certificates")
+}
+
+model Invoice {
+  id        String        @id @default(uuid())
+  projectId String        @map("project_id")
+  amount    Decimal       @db.Decimal(12, 2)
+  status    InvoiceStatus @default(PENDING)
+  dueDate   DateTime      @map("due_date")
+
+  project  Project   @relation(fields: [projectId], references: [id])
+  payments Payment[]
+
+  @@map("invoices")
+}
+
+model Payment {
+  id            String   @id @default(uuid())
+  invoiceId     String   @map("invoice_id")
+  amount        Decimal  @db.Decimal(12, 2)
+  method        String
+  status        String
+  transactionId String?  @map("transaction_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id])
+
+  @@map("payments")
+}
+
+model ExpertEarning {
+  id        String   @id @default(uuid())
+  expertId  String   @map("expert_id")
+  projectId String   @map("project_id")
+  amount    Decimal  @db.Decimal(12, 2)
+  status    String   @default("pending")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  expert ExpertProfile @relation(fields: [expertId], references: [id])
+
+  @@map("expert_earnings")
+}
+
+model Rating {
+  id            String  @id @default(uuid())
+  projectId     String  @map("project_id")
+  ratedById     String  @map("rated_by")
+  ratedUserId   String  @map("rated_user_id")
+  score         Int
+  reviewText    String? @map("review_text")
+
+  project   Project @relation(fields: [projectId], references: [id])
+  ratedBy   User    @relation("RatedBy", fields: [ratedById], references: [id])
+  ratedUser User    @relation("RatedUser", fields: [ratedUserId], references: [id])
+
+  @@map("ratings")
+}
+
+model AdminLog {
+  id         String   @id @default(uuid())
+  adminId    String   @map("admin_id")
+  action     String
+  targetType String   @map("target_type")
+  targetId   String   @map("target_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  admin User @relation(fields: [adminId], references: [id])
+
+  @@map("admin_logs")
+}
