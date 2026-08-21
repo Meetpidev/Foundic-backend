@@ -1,6 +1,6 @@
-# Foundic Execution OS — Backend
+# Foundic Execution OS - Backend
 
-Backend service for **Foundic Execution OS** — a platform that connects Founders and Companies with verified Experts to diagnose business problems and execute solutions through a structured Execution Workspace.
+Backend service for **Foundic Execution OS** - a platform that connects Founders and Companies with verified Experts to diagnose business problems and execute solutions through a structured Execution Workspace.
 
 Built with **Node.js, Express.js, JavaScript, Prisma ORM, and Neon (Serverless PostgreSQL)**.
 
