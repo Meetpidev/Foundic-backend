@@ -311,18 +311,6 @@ const socket = io(SERVER_URL, { auth: { token: accessToken } });
 
 ---
 
-## Background Jobs
-
-Powered by **BullMQ** (Redis-backed):
-
-| Queue | Purpose |
-|---|---|
-| `ai-diagnosis` | Runs AI diagnosis on newly submitted problems (async, non-blocking) |
-
-Jobs are enqueued from services (e.g. `founder.service.js`) and processed by workers in `src/jobs/queue.js`.
-
----
-
 ## PostMan Api collection
 
 Copy This in your browser:
