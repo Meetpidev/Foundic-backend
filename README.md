@@ -323,6 +323,14 @@ Jobs are enqueued from services (e.g. `founder.service.js`) and processed by wor
 
 ---
 
+## PostMan Api collection
+
+Copy This in your browser:
+```bash
+https://catalyst-coders.postman.co/workspace/vehical~c9ef7af5-99a4-40cc-9168-6814a6da4de0/collection/43154168-f8e293e0-254b-4b8e-85eb-a0b52cd71a3f?action=share&creator=43154168
+```
+
+
 ## Troubleshooting
 
 **`P1001: Can't reach database server`**
