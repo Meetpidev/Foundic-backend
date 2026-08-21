@@ -1,4 +1,3 @@
-// src/modules/expert/expert.controller.js
 const prisma = require("../../config/db");
 const service = require("./expert.service");
 const ApiError = require("../../utils/ApiError");

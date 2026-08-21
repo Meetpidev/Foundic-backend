@@ -2,12 +2,12 @@ const ApiError = require("../../utils/ApiError");
 const repo = require("./founder.repository");
 const { diagnosisQueue } = require("../../jobs/queue");
 
-// Weighted Business Health Check
+
 function computeHealthScore(answers) {
   const weights = { sales: 0.25, revenue: 0.25, marketing: 0.15, hiring: 0.1, team: 0.15, operations: 0.1 };
   let score = 0;
   for (const key of Object.keys(weights)) {
-    const value = answers[key] ?? 0; // expects 0-100 per category
+    const value = answers[key] ?? 0; 
     score += value * weights[key];
   }
   return Math.round(score);

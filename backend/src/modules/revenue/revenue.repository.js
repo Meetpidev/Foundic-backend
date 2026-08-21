@@ -1,4 +1,3 @@
-// src/modules/revenue/revenue.repository.js
 const prisma = require("../../config/db");
 
 function createInvoice(data) {

@@ -1,4 +1,3 @@
-// src/modules/execution/execution.routes.js
 const express = require("express");
 const controller = require("./execution.controller");
 const authMiddleware = require("../../middlewares/auth.middleware");

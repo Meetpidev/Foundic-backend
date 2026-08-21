@@ -12,7 +12,6 @@ function errorMiddleware(err, req, res, next) {
     });
   }
 
-  // Prisma known errors
   if (err.code === "P2002") {
     return res.status(409).json({ success: false, message: "A record with this value already exists" });
   }

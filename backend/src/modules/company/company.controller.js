@@ -1,4 +1,3 @@
-// src/modules/company/company.controller.js
 const service = require("./company.service");
 
 async function getProfile(req, res, next) {

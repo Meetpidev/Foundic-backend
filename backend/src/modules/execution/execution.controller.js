@@ -1,4 +1,3 @@
-// src/modules/execution/execution.controller.js
 const service = require("./execution.service");
 
 async function getWorkspace(req, res, next) {

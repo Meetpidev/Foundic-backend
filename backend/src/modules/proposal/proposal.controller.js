@@ -1,4 +1,3 @@
-// src/modules/proposal/proposal.controller.js
 const service = require("./proposal.service");
 
 async function create(req, res, next) {

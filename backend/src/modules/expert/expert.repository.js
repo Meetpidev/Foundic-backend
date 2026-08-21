@@ -1,4 +1,3 @@
-// src/modules/expert/expert.repository.js
 const prisma = require("../../config/db");
 
 function getProfileByUserId(userId) {

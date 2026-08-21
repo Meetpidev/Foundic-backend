@@ -1,4 +1,3 @@
-// src/modules/proposal/proposal.service.js
 const ApiError = require("../../utils/ApiError");
 const repo = require("./proposal.repository");
 

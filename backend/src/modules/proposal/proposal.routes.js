@@ -1,4 +1,3 @@
-// src/modules/proposal/proposal.routes.js
 const express = require("express");
 const controller = require("./proposal.controller");
 const authMiddleware = require("../../middlewares/auth.middleware");

@@ -1,4 +1,3 @@
-// src/modules/company/company.service.js
 const ApiError = require("../../utils/ApiError");
 const repo = require("./company.repository");
 

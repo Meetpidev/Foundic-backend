@@ -1,4 +1,3 @@
-// src/modules/notifications/notification.service.js
 const prisma = require("../../config/db");
 
 async function dispatch(io, userId, type, payload) {

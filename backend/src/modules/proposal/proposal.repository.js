@@ -1,4 +1,3 @@
-// src/modules/proposal/proposal.repository.js
 const prisma = require("../../config/db");
 
 function createProposal(data) {

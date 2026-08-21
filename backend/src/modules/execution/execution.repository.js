@@ -1,4 +1,3 @@
-// src/modules/execution/execution.repository.js
 const prisma = require("../../config/db");
 
 function getWorkspace(projectId) {

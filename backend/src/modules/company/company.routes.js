@@ -1,4 +1,3 @@
-// src/modules/company/company.routes.js
 const express = require("express");
 const controller = require("./company.controller");
 const authMiddleware = require("../../middlewares/auth.middleware");

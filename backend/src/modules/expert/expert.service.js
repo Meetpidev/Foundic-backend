@@ -1,8 +1,6 @@
-// src/modules/expert/expert.service.js
 const ApiError = require("../../utils/ApiError");
 const repo = require("./expert.repository");
 
-// Valid forward transitions in the approval state machine
 const STATUS_FLOW = {
   PENDING: ["AI_REVIEWED", "REJECTED"],
   AI_REVIEWED: ["MANUAL_REVIEW", "REJECTED"],

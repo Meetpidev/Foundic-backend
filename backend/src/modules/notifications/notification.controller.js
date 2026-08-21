@@ -1,4 +1,3 @@
-// src/modules/notifications/notification.controller.js
 const service = require("./notification.service");
 
 async function list(req, res, next) {

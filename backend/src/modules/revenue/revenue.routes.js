@@ -1,4 +1,3 @@
-// src/modules/revenue/revenue.routes.js
 const express = require("express");
 const controller = require("./revenue.controller");
 const authMiddleware = require("../../middlewares/auth.middleware");
