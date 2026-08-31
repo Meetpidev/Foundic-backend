@@ -29,4 +29,8 @@ async function getOpportunities(userId) {
   return repo.getOpportunities(profile.id);
 }
 
-module.exports = { registerProfile, transitionStatus, getOpportunities };
+async function getDashboard(userId) {
+  return repo.getDashboardData(userId);
+}
+
+module.exports = { registerProfile, transitionStatus, getOpportunities, getDashboard };

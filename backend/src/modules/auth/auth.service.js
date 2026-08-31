@@ -9,16 +9,39 @@ const { sendOtpEmail } = require("./auth.notify");
 
 async function signup({ email, phone, password, role, fullName }) {
   const existing = await repo.findUserByEmail(email);
-  if (existing) throw new ApiError(409, "An account with this email already exists");
+  let user;
 
   const passwordHash = await hashPassword(password);
-  const user = await repo.createUserWithProfile({ email, phone, passwordHash, role, fullName });
+
+  if (existing) {
+    if (existing.isVerified) {
+      throw new ApiError(409, "An account with this email already exists");
+    }
+    user = await repo.updateUnverifiedUserWithProfile(existing.id, { email, phone, passwordHash, role, fullName });
+  } else {
+    user = await repo.createUserWithProfile({ email, phone, passwordHash, role, fullName });
+  }
 
   const otp = generateOtp();
   await storeOtp(email, otp);
-  await sendOtpEmail(email, otp);
+  
+  // For development: Print OTP to console so you can test without real SMTP
+  console.log(`\n\n================================`);
+  console.log(`🔑 DEV OTP for ${email}: ${otp}`);
+  console.log(`================================\n\n`);
 
-  return { id: user.id, email: user.email, role: user.role };
+  try {
+    await sendOtpEmail(email, otp);
+  } catch (err) {
+    console.warn("⚠️ SMTP not configured correctly, email skipped.");
+  }
+
+  return {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    devOtp: process.env.NODE_ENV === "development" ? otp : undefined,
+  };
 }
 
 async function verifySignupOtp({ identifier, otp }) {

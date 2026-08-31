@@ -6,6 +6,7 @@ const rbac = require("../../middlewares/rbac.middleware");
 
 const router = express.Router();
 
+router.get("/dashboard", authMiddleware, rbac("EXPERT"), controller.dashboard);
 router.post("/register", authMiddleware, rbac("EXPERT"), controller.register);
 router.get("/opportunities", authMiddleware, rbac("EXPERT"), controller.opportunities);
 
