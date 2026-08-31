@@ -2,7 +2,7 @@ const { z } = require("zod");
 
 const signupSchema = z.object({
   email: z.string().email(),
-  phone: z.string().min(8).optional(),
+  phone: z.union([z.string().min(8), z.literal("")]).optional().transform(v => v === "" ? undefined : v),
   password: z.string().min(8),
   role: z.enum(["FOUNDER", "COMPANY", "EXPERT"]), // Foundic Team/Admin created internally
   fullName: z.string().min(2),

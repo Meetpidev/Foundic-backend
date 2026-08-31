@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const SKILL_OPTIONS = ['Sales', 'Revenue Ops', 'Marketing', 'Hiring', 'Operations', 'Finance', 'Product', 'Engineering']
 
 const MOCK_EXPERTS = [
-  { id: '1', fullName: 'Marcus Chen', title: 'Revenue Operations Expert', skills: ['Revenue Ops', 'Sales', 'CRM'], rating: 4.9, completedProjects: 47, hourlyRate: 180, bio: 'Former Salesforce revenue architect. Built $0–$50M pipelines for 3 SaaS companies. Specializes in founder-led sales systems.', tier: 'TIER_1', available: true, initials: 'MC', bg: 'bg-emerald-100', text: 'text-emerald-700' },
+  { id: '1', fullName: 'Marcus Chen', title: 'Revenue Operations Expert', skills: ['Revenue Ops', 'Sales', 'CRM'], rating: 4.9, completedProjects: 47, hourlyRate: 180, bio: 'Former Salesforce revenue architect. Built $0–$50M pipelines for 3 SaaS companies. Specializes in founder-led sales systems.', tier: 'TIER_1', available: true, initials: 'MC', bg: 'bg-[#eef8f9]', text: 'text-[#2597a3]' },
   { id: '2', fullName: 'Priya Nair', title: 'Fractional CMO', skills: ['Marketing', 'Product', 'Growth'], rating: 4.8, completedProjects: 32, hourlyRate: 160, bio: '10 years of B2B marketing leadership. Scaled 2 brands from seed to Series B through content and demand generation.', tier: 'TIER_1', available: true, initials: 'PN', bg: 'bg-blue-100', text: 'text-blue-700' },
   { id: '3', fullName: 'James Okafor', title: 'GTM & Sales Strategist', skills: ['Sales', 'Hiring', 'Operations'], rating: 4.7, completedProjects: 28, hourlyRate: 150, bio: 'Ex-McKinsey consultant turned startup operator. Helps founders build repeatable go-to-market systems in 90 days.', tier: 'TIER_2', available: false, initials: 'JO', bg: 'bg-purple-100', text: 'text-purple-700' },
   { id: '4', fullName: 'Ananya Kapoor', title: 'People & Talent Leader', skills: ['Hiring', 'Operations', 'Finance'], rating: 4.9, completedProjects: 51, hourlyRate: 140, bio: 'Built hiring infrastructure for 6 high-growth startups. Expert in recruiting systems, culture design, and performance management.', tier: 'TIER_1', available: true, initials: 'AK', bg: 'bg-amber-100', text: 'text-amber-700' },
@@ -32,12 +32,12 @@ export default function ExpertsPage() {
       <div className="container-custom">
         {/* Header */}
         <div className="text-center mb-12">
-          <p className="text-xs font-semibold text-emerald-700 uppercase tracking-widest mb-3">Expert Network</p>
+          <p className="text-xs font-semibold text-[#2597a3] uppercase tracking-widest mb-3">Expert Network</p>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
             Elite fractional <span className="gradient-text">operators</span>
           </h1>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            Every expert on Foundic has been vetted through our 3-stage screening process. Only the top 3% make it in.
+            Every expert on Foundic Network has been vetted through our 3-stage screening process. Only the top 3% make it in.
           </p>
         </div>
 
@@ -66,7 +66,7 @@ export default function ExpertsPage() {
           <label className="flex items-center gap-2 cursor-pointer bg-white border border-gray-200 rounded-lg px-4 py-2.5 shadow-sm">
             <input
               type="checkbox"
-              className="w-4 h-4 accent-emerald-700"
+              className="w-4 h-4 accent-[#2597a3]"
               checked={availableOnly}
               onChange={(e) => setAvailableOnly(e.target.checked)}
             />
@@ -93,7 +93,7 @@ export default function ExpertsPage() {
                       <div className="text-xs text-gray-500">{expert.title}</div>
                     </div>
                   </div>
-                  <div className={`w-2.5 h-2.5 rounded-full mt-1 ${expert.available ? 'bg-emerald-500' : 'bg-gray-300'}`} title={expert.available ? 'Available' : 'Busy'} />
+                  <div className={`w-2.5 h-2.5 rounded-full mt-1 ${expert.available ? 'bg-[#2597a3]' : 'bg-gray-300'}`} title={expert.available ? 'Available' : 'Busy'} />
                 </div>
 
                 {/* Bio */}
@@ -115,7 +115,7 @@ export default function ExpertsPage() {
                     <span className="text-gray-900 font-bold">{expert.rating}</span>
                   </div>
                   <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
+                    <CheckCircle className="w-3.5 h-3.5 text-[#2597a3]" />
                     <span>{expert.completedProjects} projects</span>
                   </div>
                   <div className="text-xs text-gray-500 ml-auto">
@@ -130,7 +130,7 @@ export default function ExpertsPage() {
                   </span>
                   <Link
                     to={`/experts/${expert.id}`}
-                    className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 transition-all"
+                    className="text-xs font-semibold text-[#2597a3] hover:text-[#1c7a85] flex items-center gap-1 transition-all"
                   >
                     View profile <ArrowRight className="w-3 h-3" />
                   </Link>

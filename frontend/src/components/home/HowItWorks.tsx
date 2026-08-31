@@ -6,8 +6,8 @@ const STEPS = [
     icon: ClipboardList,
     title: 'Run your Business Diagnostic',
     description: 'Complete a 60-second health assessment across 6 critical pillars: Sales, Revenue, Marketing, Hiring, Team, and Operations. Get an instant score with a breakdown of bottlenecks.',
-    accent: 'bg-emerald-50 text-emerald-700',
-    border: 'border-emerald-100',
+    accent: 'bg-[#eef8f9] text-[#2597a3]',
+    border: 'border-[#d3f0f3]',
   },
   {
     number: '02',
@@ -41,7 +41,7 @@ export default function HowItWorks() {
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-14">
-          <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">The Process</p>
+          <p className="text-xs font-semibold text-[#2597a3] uppercase tracking-widest mb-3">The Process</p>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             From bottleneck to <span className="gradient-text">measurable results</span>
           </h2>
