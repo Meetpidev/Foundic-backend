@@ -33,4 +33,13 @@ async function opportunities(req, res, next) {
   }
 }
 
-module.exports = { register, updateStatus, opportunities };
+async function dashboard(req, res, next) {
+  try {
+    const data = await service.getDashboard(req.user.id);
+    res.json({ success: true, data });
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { register, updateStatus, opportunities, dashboard };

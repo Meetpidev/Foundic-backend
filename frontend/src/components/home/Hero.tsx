@@ -5,7 +5,7 @@ import { ArrowRight, CheckCircle, BadgeCheck, MapPin } from 'lucide-react'
 const TABS = ['For Founders', 'For Experts']
 
 const EXPERTS = [
-  { initials: 'AR', name: 'Aarav Rathi', role: 'Fractional CRO', bg: 'bg-emerald-100', text: 'text-emerald-700', prevAt: 'Freshworks' },
+  { initials: 'AR', name: 'Aarav Rathi', role: 'Fractional CRO', bg: 'bg-[#eef8f9]', text: 'text-[#2597a3]', prevAt: 'Freshworks' },
   { initials: 'PM', name: 'Priya Menon', role: 'Growth Operator', bg: 'bg-blue-100', text: 'text-blue-700', prevAt: 'Razorpay' },
   { initials: 'SK', name: 'Siddharth Kapoor', role: 'Product Lead', bg: 'bg-purple-100', text: 'text-purple-700', prevAt: 'Swiggy' },
   { initials: 'NS', name: 'Neha Sharma', role: 'Ops Strategist', bg: 'bg-amber-100', text: 'text-amber-700', prevAt: 'Zepto' },
@@ -89,7 +89,7 @@ export default function Hero() {
                 'Milestone-based escrow payment',
               ].map((point) => (
                 <div key={point} className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-[#2597a3] shrink-0" />
                   {point}
                 </div>
               ))}
@@ -100,7 +100,7 @@ export default function Hero() {
           <div className="hidden lg:flex justify-center items-start pt-4">
             <div className="expert-card w-64 animate-float">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-base">
+                <div className="w-12 h-12 rounded-full bg-[#eef8f9] flex items-center justify-center text-[#2597a3] font-bold text-base">
                   AR
                 </div>
                 <div>
@@ -120,7 +120,7 @@ export default function Hero() {
               <div className="mt-3 pt-3 border-t border-gray-100">
                 <div className="flex justify-between text-xs">
                   <span className="text-gray-400">Match Rate</span>
-                  <span className="font-semibold text-green-700">94%</span>
+                  <span className="font-semibold text-[#2597a3]">94%</span>
                 </div>
               </div>
             </div>

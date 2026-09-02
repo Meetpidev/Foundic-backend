@@ -18,7 +18,7 @@ const JOURNEYS = [
     ],
     cta: 'Diagnose your business',
     href: '/diagnostic',
-    accentColor: 'text-green-700',
+    accentColor: 'text-[#2597a3]',
     metrics: [
       { label: 'Health Score', value: '74/100', trend: '+12 pts' },
       { label: 'Time to Match', value: '36h', trend: 'Average' },
@@ -84,7 +84,7 @@ export default function Journeys() {
       <div className="container-custom">
         {/* Section header */}
         <div className="text-center mb-12">
-          <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Who it is for</p>
+          <p className="text-xs font-semibold text-[#2597a3] uppercase tracking-widest mb-3">Who it is for</p>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Built for every side <span className="gradient-text">of the equation</span>
           </h2>
@@ -123,7 +123,7 @@ export default function Journeys() {
             <ul className="flex flex-col gap-2.5 mb-8">
               {journey.benefits.map((benefit) => (
                 <li key={benefit} className="flex items-start gap-2 text-sm text-gray-700">
-                  <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-[#2597a3] mt-0.5 shrink-0" />
                   {benefit}
                 </li>
               ))}

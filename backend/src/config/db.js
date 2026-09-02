@@ -1,9 +1,9 @@
 const { PrismaClient } = require("../../generated/prisma/client");
 const { PrismaPg } = require("@prisma/adapter-pg");
-const { DATABASE_URL, NODE_ENV } = require("./env");
+const { DIRECT_URL, DATABASE_URL, NODE_ENV } = require("./env");
 
 const adapter = new PrismaPg({
-  connectionString: DATABASE_URL, // pooled URL — fine for the running app
+  connectionString: DIRECT_URL || DATABASE_URL,
   ssl: { rejectUnauthorized: false },
 });
 

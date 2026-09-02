@@ -78,15 +78,15 @@ function RadarChartSVG({ data }: { data: { pillar: string; score: number }[] }) 
       {/* Data polygon */}
       <polygon
         points={polygonStr}
-        fill="rgba(32, 110, 84, 0.15)"
-        stroke="rgb(32 110 84)"
+        fill="rgba(37, 151, 163, 0.15)"
+        stroke="rgb(37 151 163)"
         strokeWidth={2}
         strokeLinejoin="round"
       />
 
       {/* Data points */}
       {dataPoints.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r={4} fill="rgb(32 110 84)" />
+        <circle key={i} cx={p.x} cy={p.y} r={4} fill="rgb(37 151 163)" />
       ))}
 
       {/* Labels */}
@@ -152,7 +152,7 @@ export default function DiagnosticPage() {
         {/* INTRO */}
         {step === 'intro' && (
           <div className="text-center animate-fade-in-up">
-            <p className="text-xs font-semibold text-emerald-700 uppercase tracking-widest mb-3">Free Diagnostic</p>
+            <p className="text-xs font-semibold text-[#2597a3] uppercase tracking-widest mb-3">Free Diagnostic</p>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               How healthy is your<br />
               <span className="gradient-text">business right now?</span>
@@ -163,7 +163,7 @@ export default function DiagnosticPage() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10 max-w-lg mx-auto">
               {PILLARS.map(p => (
                 <div key={p.key} className="card text-center py-4 px-3 border border-gray-200">
-                  <p.icon className="w-5 h-5 text-emerald-700 mx-auto mb-2" />
+                  <p.icon className="w-5 h-5 text-[#2597a3] mx-auto mb-2" />
                   <div className="text-xs text-gray-900 font-semibold">{p.label}</div>
                 </div>
               ))}
@@ -173,7 +173,7 @@ export default function DiagnosticPage() {
             </button>
             {!user && (
               <p className="text-gray-500 text-xs mt-4">
-                No account required · <Link to="/signup" className="font-semibold text-emerald-700 hover:text-emerald-800">Sign up</Link> to save results
+                No account required · <Link to="/signup" className="font-semibold text-[#2597a3] hover:text-[#1c7a85]">Sign up</Link> to save results
               </p>
             )}
           </div>
@@ -189,14 +189,14 @@ export default function DiagnosticPage() {
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
-                  className="bg-emerald-700 h-2 rounded-full transition-all duration-500"
+                  className="bg-[#2597a3] h-2 rounded-full transition-all duration-500"
                   style={{ width: `${(currentPillar / PILLARS.length) * 100}%` }}
                 />
               </div>
             </div>
 
             <div className="card mb-6 border border-gray-200">
-              <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-[#eef8f9] text-[#2597a3] border border-[#d3f0f3] flex items-center justify-center mb-4">
                 {(() => { const Icon = PILLARS[currentPillar].icon; return <Icon className="w-5 h-5" /> })()}
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -276,7 +276,7 @@ export default function DiagnosticPage() {
                       </div>
                       <div className="w-full bg-gray-100 rounded-full h-2">
                         <div
-                          className="bg-emerald-700 h-2 rounded-full transition-all duration-700"
+                          className="bg-[#2597a3] h-2 rounded-full transition-all duration-700"
                           style={{ width: `${scores[p.key] ?? 0}%` }}
                         />
                       </div>
@@ -288,7 +288,7 @@ export default function DiagnosticPage() {
 
             {/* CTA */}
             <div className="card text-center border border-gray-200 bg-white p-8">
-              <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 mx-auto flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-[#eef8f9] text-[#2597a3] mx-auto flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Find your operator</h3>
