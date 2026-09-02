@@ -25,7 +25,7 @@ export default function FounderDashboard() {
   const projects = dashData?.activeProjects ?? []
 
   const getHealthColor = (score: number) => {
-    if (score >= 80) return 'text-emerald-700'
+    if (score >= 80) return 'text-[#2597a3]'
     if (score >= 60) return 'text-blue-700'
     if (score >= 40) return 'text-amber-700'
     return 'text-red-700'
@@ -37,7 +37,7 @@ export default function FounderDashboard() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
           <div>
-            <p className="text-xs font-semibold text-emerald-700 uppercase tracking-widest mb-1">Founder Portal</p>
+            <p className="text-xs font-semibold text-[#2597a3] uppercase tracking-widest mb-1">Founder Portal</p>
             <h1 className="text-3xl font-bold text-gray-900">
               Welcome back<span className="gradient-text">{user?.email ? `, ${user.email.split('@')[0]}` : ''}</span>
             </h1>
@@ -54,7 +54,7 @@ export default function FounderDashboard() {
 
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="w-8 h-8 border-2 border-emerald-700 border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-[#2597a3] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
           <>
@@ -63,7 +63,7 @@ export default function FounderDashboard() {
               {/* Health Score */}
               <div className="card border border-gray-200 relative overflow-hidden">
                 <div className="relative flex items-start justify-between mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-100">
+                  <div className="w-10 h-10 rounded-xl bg-[#eef8f9] text-[#2597a3] flex items-center justify-center border border-[#d3f0f3]">
                     <TrendingUp className="w-5 h-5" />
                   </div>
                   {healthScore !== null && (
@@ -77,14 +77,14 @@ export default function FounderDashboard() {
                   {healthScore === null ? 'Take the diagnostic to see your score' : 'Out of 100 across all pillars'}
                 </div>
                 {healthScore === null && (
-                  <Link to="/diagnostic" className="text-emerald-700 text-xs mt-2 inline-flex items-center gap-1 font-semibold hover:text-emerald-800">
+                  <Link to="/diagnostic" className="text-[#2597a3] text-xs mt-2 inline-flex items-center gap-1 font-semibold hover:text-[#1c7a85]">
                     Run diagnostic <ArrowRight className="w-3 h-3" />
                   </Link>
                 )}
                 {healthScore !== null && (
                   <div className="mt-3 w-full bg-gray-100 rounded-full h-1.5">
                     <div
-                      className="bg-emerald-700 h-1.5 rounded-full"
+                      className="bg-[#2597a3] h-1.5 rounded-full"
                       style={{ width: `${healthScore}%` }}
                     />
                   </div>
@@ -120,7 +120,7 @@ export default function FounderDashboard() {
             <div className="mb-8">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold text-gray-900">Your Problems</h2>
-                <Link to="/dashboard/founder/new-problem" className="text-emerald-700 text-sm font-semibold hover:text-emerald-800 flex items-center gap-1">
+                <Link to="/dashboard/founder/new-problem" className="text-[#2597a3] text-sm font-semibold hover:text-[#1c7a85] flex items-center gap-1">
                   <Plus className="w-3.5 h-3.5" /> Add new
                 </Link>
               </div>
@@ -139,7 +139,7 @@ export default function FounderDashboard() {
                     const status = STATUS_CONFIG[problem.status] || STATUS_CONFIG.DRAFT
                     const StatusIcon = status.icon
                     return (
-                      <div key={problem.id} className="card border border-gray-200 hover:border-emerald-200 transition-all">
+                      <div key={problem.id} className="card border border-gray-200 hover:border-[#2597a3]/40 transition-all">
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1 min-w-0">
                             <div className="font-semibold text-gray-900 mb-1 truncate">{problem.title}</div>
@@ -159,7 +159,7 @@ export default function FounderDashboard() {
                           <span className="text-xs text-gray-400">
                             Submitted {new Date(problem.createdAt).toLocaleDateString()}
                           </span>
-                          <Link to={`/dashboard/founder/problems/${problem.id}`} className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 ml-auto">
+                          <Link to={`/dashboard/founder/problems/${problem.id}`} className="text-xs font-semibold text-[#2597a3] hover:text-[#1c7a85] flex items-center gap-1 ml-auto">
                             View details <ArrowRight className="w-3 h-3" />
                           </Link>
                         </div>
@@ -176,7 +176,7 @@ export default function FounderDashboard() {
                 <h2 className="text-lg font-bold text-gray-900 mb-4">Active Executions</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {projects.map((project: any) => (
-                    <div key={project.id} className="card border border-gray-200 hover:border-emerald-200 transition-all">
+                    <div key={project.id} className="card border border-gray-200 hover:border-[#2597a3]/40 transition-all">
                       <div className="flex items-center justify-between mb-3">
                         <div className="font-semibold text-gray-900 text-sm">Project #{project.id.slice(0, 8)}</div>
                         <span className="badge badge-success text-xs">Active</span>
@@ -191,7 +191,7 @@ export default function FounderDashboard() {
                           <div className="text-xs text-gray-500">Milestones</div>
                         </div>
                       </div>
-                      <Link to={`/workspace/${project.id}`} className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 flex items-center gap-1">
+                      <Link to={`/workspace/${project.id}`} className="text-xs font-semibold text-[#2597a3] hover:text-[#1c7a85] flex items-center gap-1">
                         Open workspace <ArrowRight className="w-3 h-3" />
                       </Link>
                     </div>

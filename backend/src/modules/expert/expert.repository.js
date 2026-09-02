@@ -20,4 +20,22 @@ function getOpportunities(expertId) {
   });
 }
 
-module.exports = { getProfileByUserId, updateProfile, updateStatus, getOpportunities };
+async function getDashboardData(userId) {
+  const profile = await prisma.expertProfile.findUnique({ where: { userId } });
+  if (!profile) return { profile: null, matches: [], projects: [] };
+
+  const matches = await prisma.expertMatch.findMany({
+    where: { expertId: profile.id, status: "suggested" },
+    include: { problem: true },
+    orderBy: { matchScore: "desc" },
+  });
+
+  const projects = await prisma.project.findMany({
+    where: { expertId: profile.id },
+    include: { tasks: true, milestones: true },
+  });
+
+  return { profile, matches, projects };
+}
+
+module.exports = { getProfileByUserId, updateProfile, updateStatus, getOpportunities, getDashboardData };

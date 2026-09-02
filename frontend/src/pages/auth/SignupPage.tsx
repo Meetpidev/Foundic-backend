@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, Zap, Mail, Lock, User, ArrowRight } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
-import api from '@/lib/api'
+import api, { getApiErrorMessage } from '@/lib/api'
+import Logo from '@/components/common/Logo'
 
 type Role = 'FOUNDER' | 'EXPERT' | 'COMPANY'
 
@@ -22,7 +23,6 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [otp, setOtp] = useState('')
-  const [userId, setUserId] = useState('')
 
   const [form, setForm] = useState({
     fullName: '',
@@ -31,16 +31,24 @@ export default function SignupPage() {
     password: '',
   })
 
+  const [devOtpCode, setDevOtpCode] = useState('')
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError('')
     try {
-      const res = await api.post('/auth/signup', { ...form, role })
-      setUserId(res.data.data.id)
+      const payload = {
+        ...form,
+        phone: form.phone.trim() || undefined,
+        role,
+      }
+      const res = await api.post('/auth/signup', payload)
+      const data = res.data?.data
+     
       setStep('otp')
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Sign up failed. Please try again.')
+      setError(getApiErrorMessage(err, 'Sign up failed. Please try again.'))
     } finally {
       setIsLoading(false)
     }
@@ -56,7 +64,7 @@ export default function SignupPage() {
       login(user, accessToken, refreshToken)
       navigate(user.role === 'FOUNDER' ? '/dashboard/founder' : user.role === 'EXPERT' ? '/dashboard/expert' : '/dashboard/company')
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Invalid OTP. Please try again.')
+      setError(getApiErrorMessage(err, 'Invalid OTP. Please try again.'))
     } finally {
       setIsLoading(false)
     }
@@ -70,18 +78,15 @@ export default function SignupPage() {
       <div className="relative w-full max-w-md">
         {/* Logo & Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-emerald-700 flex items-center justify-center shadow-sm">
-              <Zap className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-bold text-xl text-gray-900">Foundic<span className="text-emerald-700">OS</span></span>
-          </Link>
-          <h1 className="text-2xl font-bold text-gray-900 mt-4 mb-1">
+          <div className="inline-block mb-3">
+            <Logo size="lg" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mt-2 mb-1">
             {step === 'details' ? 'Create your account' : 'Verify your email'}
           </h1>
           <p className="text-gray-500 text-sm">
             {step === 'details'
-              ? 'Join the execution operating system'
+              ? 'Join the premier fractional operator network'
               : `We sent a 6-digit code to ${form.email}`
             }
           </p>
@@ -101,7 +106,7 @@ export default function SignupPage() {
                       onClick={() => setRole(r.value)}
                       className={`text-left px-4 py-3 rounded-lg border transition-all ${
                         role === r.value
-                          ? 'border-emerald-700 bg-emerald-50/70 text-gray-900 shadow-sm'
+                          ? 'border-[#2597a3] bg-[#eef8f9] text-gray-900 shadow-sm'
                           : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'
                       }`}
                     >
@@ -144,6 +149,21 @@ export default function SignupPage() {
                 </div>
               </div>
 
+              {/* Phone */}
+              <div>
+                <label className="text-xs font-semibold text-gray-700 mb-1.5 block">Phone Number</label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="tel"
+                    className="input pl-10"
+                    placeholder="+1 (555) 000-0000"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  />
+                </div>
+              </div>
+
               {/* Password */}
               <div>
                 <label className="text-xs font-semibold text-gray-700 mb-1.5 block">Password</label>
@@ -181,7 +201,7 @@ export default function SignupPage() {
 
               <p className="text-center text-gray-500 text-xs mt-2">
                 Already have an account?{' '}
-                <Link to="/login" className="font-semibold text-emerald-700 hover:text-emerald-800">Sign in</Link>
+                <Link to="/login" className="font-semibold text-[#2597a3] hover:text-[#1c7a85]">Sign in</Link>
               </p>
             </form>
           ) : (
@@ -200,6 +220,7 @@ export default function SignupPage() {
                 <p className="text-xs text-gray-500 mt-2 text-center">
                   Check your email inbox for the 6-digit code
                 </p>
+              
               </div>
 
               {error && (

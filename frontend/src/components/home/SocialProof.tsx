@@ -38,7 +38,7 @@ export default function SocialProof() {
     <section className="section-padding" style={{ background: '#f9fafb' }}>
       <div className="container-custom">
         <div className="text-center mb-14">
-          <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Results that speak</p>
+          <p className="text-xs font-semibold text-[#2597a3] uppercase tracking-widest mb-3">Results that speak</p>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Trusted by founders and <span className="gradient-text">operators worldwide</span>
           </h2>
@@ -60,7 +60,7 @@ export default function SocialProof() {
                 <div className="flex-1">
                   <div className="font-semibold text-gray-900 text-sm flex items-center gap-1">
                     {t.name}
-                    <BadgeCheck className="w-3.5 h-3.5 text-green-600" />
+                    <BadgeCheck className="w-3.5 h-3.5 text-[#2597a3]" />
                   </div>
                   <div className="text-xs text-gray-400">{t.role}</div>
                 </div>

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, Zap, Mail, Lock, ArrowRight, Shield } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Shield } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
-import api from '@/lib/api'
+import api, { getApiErrorMessage } from '@/lib/api'
+import Logo from '@/components/common/Logo'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -44,7 +45,7 @@ export default function LoginPage() {
         navigate(getRedirectPath(data.user.role))
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed. Check your credentials.')
+      setError(getApiErrorMessage(err, 'Login failed. Check your credentials.'))
     } finally {
       setIsLoading(false)
     }
@@ -60,7 +61,7 @@ export default function LoginPage() {
       login(user, accessToken, refreshToken)
       navigate(getRedirectPath(user.role))
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Invalid 2FA code.')
+      setError(getApiErrorMessage(err, 'Invalid 2FA code.'))
     } finally {
       setIsLoading(false)
     }
@@ -74,17 +75,14 @@ export default function LoginPage() {
       <div className="relative w-full max-w-sm">
         {/* Logo & Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-emerald-700 flex items-center justify-center shadow-sm">
-              <Zap className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-bold text-xl text-gray-900">Foundic<span className="text-emerald-700">OS</span></span>
-          </Link>
-          <h1 className="text-2xl font-bold text-gray-900 mt-4 mb-1">
+          <div className="inline-block mb-3">
+            <Logo size="lg" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mt-2 mb-1">
             {show2FA ? 'Two-factor authentication' : 'Sign in to your account'}
           </h1>
           <p className="text-gray-500 text-sm">
-            {show2FA ? 'Enter the code from your authenticator app' : 'Welcome back to Foundic Execution OS'}
+            {show2FA ? 'Enter the code from your authenticator app' : 'Welcome back to Foundic Network'}
           </p>
         </div>
 
@@ -109,7 +107,7 @@ export default function LoginPage() {
               <div>
                 <div className="flex justify-between mb-1.5">
                   <label className="text-xs font-semibold text-gray-700">Password</label>
-                  <Link to="/forgot-password" className="text-xs font-medium text-emerald-700 hover:text-emerald-800">
+                  <Link to="/forgot-password" className="text-xs font-medium text-[#2597a3] hover:text-[#1c7a85]">
                     Forgot password?
                   </Link>
                 </div>
@@ -146,14 +144,14 @@ export default function LoginPage() {
 
               <p className="text-center text-gray-500 text-xs mt-2">
                 Don't have an account?{' '}
-                <Link to="/signup" className="font-semibold text-emerald-700 hover:text-emerald-800">Sign up free</Link>
+                <Link to="/signup" className="font-semibold text-[#2597a3] hover:text-[#1c7a85]">Sign up free</Link>
               </p>
             </form>
           ) : (
             <form onSubmit={handle2FA} className="flex flex-col gap-4">
               <div className="text-center mb-2">
-                <div className="w-14 h-14 mx-auto rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-3">
-                  <Shield className="w-6 h-6 text-emerald-700" />
+                <div className="w-14 h-14 mx-auto rounded-2xl bg-[#eef8f9] border border-[#d3f0f3] flex items-center justify-center mb-3">
+                  <Shield className="w-6 h-6 text-[#2597a3]" />
                 </div>
               </div>
               <div>

@@ -25,6 +25,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(pinoHttp());
 
+app.get("/test", (req,res) => {
+    res.send("APIs are working !");
+});
+
 const globalLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300 });
 app.use(globalLimiter);
 
@@ -33,6 +37,7 @@ app.get("/health", (req, res) => res.json({ status: "ok" }));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/founder", founderRoutes);
 app.use("/api/v1/company", companyRoutes);
+app.use("/api/v1/expert", expertRoutes);
 app.use("/api/v1/experts", expertRoutes);
 app.use("/api/v1/matching", matchingRoutes);
 app.use("/api/v1/proposals", proposalRoutes);

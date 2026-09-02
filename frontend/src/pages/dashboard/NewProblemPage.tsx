@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { ArrowRight, ArrowLeft, TrendingUp, BarChart2, Activity, Users, Briefcase, Settings } from 'lucide-react'
-import api from '@/lib/api'
+import api, { getApiErrorMessage } from '@/lib/api'
 
 const CATEGORIES = [
-  { value: 'SALES', label: 'Sales', icon: TrendingUp, accent: 'bg-emerald-50 text-emerald-700 border-emerald-100' },
+  { value: 'SALES', label: 'Sales', icon: TrendingUp, accent: 'bg-[#eef8f9] text-[#2597a3] border-[#d3f0f3]' },
   { value: 'REVENUE', label: 'Revenue', icon: BarChart2, accent: 'bg-purple-50 text-purple-700 border-purple-100' },
   { value: 'MARKETING', label: 'Marketing', icon: Activity, accent: 'bg-blue-50 text-blue-700 border-blue-100' },
   { value: 'HIRING', label: 'Hiring', icon: Users, accent: 'bg-amber-50 text-amber-700 border-amber-100' },
@@ -40,7 +40,7 @@ export default function NewProblemPage() {
       await api.post('/founder/problems', payload)
       navigate('/dashboard/founder', { state: { success: 'Problem submitted for AI diagnosis' } })
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to submit problem. Please try again.')
+      setError(getApiErrorMessage(err, 'Failed to submit problem. Please try again.'))
     } finally {
       setIsLoading(false)
     }
@@ -64,7 +64,7 @@ export default function NewProblemPage() {
             <div
               key={s}
               className={`flex-1 h-2 rounded-full transition-all ${
-                s <= step ? 'bg-emerald-700' : 'bg-gray-200'
+                s <= step ? 'bg-[#2597a3]' : 'bg-gray-200'
               }`}
             />
           ))}
@@ -85,7 +85,7 @@ export default function NewProblemPage() {
                     onClick={() => setForm({ ...form, category: cat.value })}
                     className={`p-4 rounded-xl border transition-all text-left ${
                       form.category === cat.value
-                        ? 'border-emerald-700 bg-emerald-50/80 shadow-sm'
+                        ? 'border-[#2597a3] bg-[#eef8f9]/80 shadow-sm'
                         : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'
                     }`}
                   >
@@ -121,7 +121,7 @@ export default function NewProblemPage() {
                     onClick={() => setForm({ ...form, urgency: opt })}
                     className={`px-4 py-2 rounded-lg text-sm border transition-all font-semibold ${
                       form.urgency === opt
-                        ? 'border-emerald-700 bg-emerald-700 text-white'
+                        ? 'border-[#2597a3] bg-[#2597a3] text-white'
                         : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'
                     }`}
                   >

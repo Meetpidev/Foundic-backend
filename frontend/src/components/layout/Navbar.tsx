@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Menu, X, Zap } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
 import { cn } from '@/lib/utils'
+import Logo from '@/components/common/Logo'
 
 const NAV_LINKS = [
   { label: 'How it works', href: '/#how-it-works' },
@@ -46,14 +47,7 @@ export default function Navbar() {
       <div className="container-custom">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center shadow-sm">
-              <Zap className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-lg tracking-tight text-gray-900">
-              Foundic<span className="text-emerald-700">OS</span>
-            </span>
-          </Link>
+          <Logo size="md" />
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
