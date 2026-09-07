@@ -15,6 +15,7 @@ import DiagnosticPage from '@/pages/DiagnosticPage'
 import ExpertsPage from '@/pages/ExpertsPage'
 import FounderDashboard from '@/pages/dashboard/FounderDashboard'
 import ExpertDashboard from '@/pages/dashboard/ExpertDashboard'
+import CompanyDashboard from '@/pages/dashboard/CompanyDashboard'
 import NewProblemPage from '@/pages/dashboard/NewProblemPage'
 
 const queryClient = new QueryClient({
@@ -65,6 +66,18 @@ function App() {
             }
           >
             <Route index element={<ExpertDashboard />} />
+          </Route>
+
+          {/* Company dashboard */}
+          <Route
+            path="/dashboard/company"
+            element={
+              <ProtectedRoute allowedRoles={['COMPANY']}>
+                <PublicLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<CompanyDashboard />} />
           </Route>
 
           {/* Redirects */}
