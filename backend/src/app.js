@@ -20,7 +20,7 @@ const revenueRoutes = require("./modules/revenue/revenue.routes");
 const app = express();
 
 app.use(helmet());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://foundic-backend-h9rf.vercel.app", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(pinoHttp());
